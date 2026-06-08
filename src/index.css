@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 84 100% 66%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 54%;
+    --accent: 84 100% 66%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 84 100% 66%;
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-[#0a0a0a] text-foreground antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    background: rgba(182, 255, 83, 0.3);
+    color: #ffffff;
+  }
+}
+
+@layer components {
+  .scribble-svg {
+    position: absolute;
+    overflow: visible;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    pointer-events: none;
+  }
+
+  .scribble-svg path {
+    fill: none;
+    stroke: #b6ff53;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .animate-scribble {
+    animation: scribble-draw 0.8s ease-in-out forwards;
+  }
+
+  @keyframes scribble-draw {
+    from {
+      stroke-dashoffset: 1000;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .glow-green {
+    box-shadow: 0 0 20px rgba(182, 255, 83, 0.15), 0 0 40px rgba(182, 255, 83, 0.08);
+  }
+
+  .glow-green-strong {
+    box-shadow: 0 0 30px rgba(182, 255, 83, 0.25), 0 0 60px rgba(182, 255, 83, 0.12);
+  }
+
+  .glass-panel {
+    background: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .mesh-gradient {
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 40%, rgba(182, 255, 83, 0.08), transparent),
+      radial-gradient(ellipse 60% 80% at 80% 60%, rgba(100, 200, 150, 0.05), transparent),
+      radial-gradient(ellipse 50% 50% at 50% 50%, rgba(182, 255, 83, 0.03), transparent);
+  }
+}
+
+@layer utilities {
+  .font-kalam {
+    font-family: 'Kalam', cursive;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Phase 2: Data Stream Track */
+  .stream-track {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0,0,0,0.3) 8%,
+      rgba(0,0,0,1) 25%,
+      rgba(0,0,0,1) 75%,
+      rgba(0,0,0,0.3) 92%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0,0,0,0.3) 8%,
+      rgba(0,0,0,1) 25%,
+      rgba(0,0,0,1) 75%,
+      rgba(0,0,0,0.3) 92%,
+      transparent 100%
+    );
+  }
+
+  /* Phase 2: Depth of field for stream cards */
+  .stream-card-outer {
+    filter: blur(4px) brightness(0.4);
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+
+  .stream-card-inner {
+    filter: blur(1px) brightness(0.7);
+    transform: scale(0.85);
+    opacity: 0.8;
+  }
+
+  .stream-card-center {
+    filter: blur(0px) brightness(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  /* Phase 1: Status dot pulse */
+  @keyframes status-dot {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+
+  .status-dot-animate {
+    animation: status-dot 1.5s ease-in-out infinite;
+  }
+
+  /* Phase 3: Result card entrance */
+  @keyframes result-enter {
+    0% {
+      opacity: 0;
+      transform: scale(0.85) translateY(20px);
+      filter: blur(8px);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.02) translateY(0);
+      filter: blur(0px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      filter: blur(0px);
+    }
+  }
+
+  .result-enter {
+    animation: result-enter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Info stagger fade in */
+  @keyframes info-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .info-stagger-1 { animation: info-fade-in 0.5s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .info-stagger-2 { animation: info-fade-in 0.5s 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .info-stagger-3 { animation: info-fade-in 0.5s 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .info-stagger-4 { animation: info-fade-in 0.5s 0.75s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .info-stagger-5 { animation: info-fade-in 0.5s 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+  /* Calorie number count animation helper */
+  @keyframes calorie-pop {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .calorie-pop {
+    animation: calorie-pop 0.6s 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
